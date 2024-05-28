@@ -56,16 +56,5 @@
       "Ricette vegetariane",
       "Ricette al forno"
     ]
-  },
-  {
-    "slug": "bubble-tea",
-    "title": "bubble Tea",
-    "content": "bevanda a base di te e palline di tapioca",
-    "image": "image.jpg",
-    "tags": [
-      "te",
-      "latte",
-      "caramello"
-    ]
   }
 ]

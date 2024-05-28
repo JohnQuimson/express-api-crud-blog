@@ -79,10 +79,37 @@ const download = (req, res) => {
   }
 };
 
+const destroy = (req, res) => {
+  const { slug } = req.params;
+  const postDaEliminare = posts.find((p) => p.slug === slug);
+  if (!postDaEliminare) {
+    return res.status(404).send(`Non esiste un post con slug ${slug}`);
+  }
+
+  posts = posts.filter((p) => p.slug !== slug);
+  fs.writeFileSync(
+    path.join(__dirname, '../db/posts.json'),
+    JSON.stringify(posts, null, 2)
+  );
+
+  res.format({
+    html: () => {
+      res.redirect('/');
+    },
+    text: () => {
+      res.send(`Post con slug: ${slug} eliminato con successo.`);
+    },
+    json: () => {
+      res.json({ message: `Post con slug: ${slug} eliminato con successo.` });
+    },
+  });
+};
+
 module.exports = {
   index,
   show,
   create,
   store,
   download,
+  destroy,
 };
