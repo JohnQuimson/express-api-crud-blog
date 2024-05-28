@@ -7,6 +7,9 @@ const routersLogger = require('./middlewares/routersLogger.js');
 const errorsFormatter = require('./middlewares/errorsFormatter.js');
 const routesNotFound = require('./middlewares/routesNotFound.js');
 
+// body parser per application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static('./public'));
 
 app.use(routersLogger);

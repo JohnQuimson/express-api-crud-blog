@@ -2,7 +2,9 @@ module.exports = (err, req, res, next) => {
   const statusCode = 500;
   res.format({
     html: () =>
-      res.status(statusCode).send('Qualcosa fa schifo! ' + err.message),
+      res
+        .status(statusCode)
+        .send('Qualcosa non è andato a buon fine. ' + err.message),
     json: () =>
       res
         .status(statusCode)

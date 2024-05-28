@@ -44,6 +44,27 @@ const create = (req, res) => {
   });
 };
 
+const store = (req, res) => {
+  const { title, content, image, tags } = req.body;
+  const slug = title.toLowerCase().replace(/ /g, '-');
+  const newPost = { slug, title, content, image, tags: tags.split(',') };
+
+  posts.push(newPost);
+  fs.writeFileSync(
+    path.join(__dirname, '../db/posts.json'),
+    JSON.stringify(posts, null, 2)
+  );
+
+  res.format({
+    html: () => {
+      res.redirect('/');
+    },
+    json: () => {
+      res.json(newPost);
+    },
+  });
+};
+
 const download = (req, res) => {
   const postDownload = posts.find((post) => post.slug === req.params.slug);
   if (postDownload) {
@@ -62,5 +83,6 @@ module.exports = {
   index,
   show,
   create,
+  store,
   download,
 };
