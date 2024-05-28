@@ -45,9 +45,16 @@ const create = (req, res) => {
 };
 
 const store = (req, res) => {
-  const { title, content, image, tags } = req.body;
+  const { title, content, tags } = req.body;
   const slug = title.toLowerCase().replace(/ /g, '-');
-  const newPost = { slug, title, content, image, tags: tags.split(',') };
+  const image = req.file.filename;
+  const newPost = {
+    slug,
+    title,
+    content,
+    image,
+    tags: tags.split(','),
+  };
 
   posts.push(newPost);
   fs.writeFileSync(
@@ -96,11 +103,9 @@ const destroy = (req, res) => {
     html: () => {
       res.redirect('/');
     },
-    text: () => {
-      res.send(`Post con slug: ${slug} eliminato con successo.`);
-    },
-    json: () => {
-      res.json({ message: `Post con slug: ${slug} eliminato con successo.` });
+
+    default: () => {
+      res.send(`Post con slug ${slug} eliminato con successo.`);
     },
   });
 };
